@@ -1,6 +1,7 @@
 package com.haichenyi.kotlinmvp.base
 
 import android.app.Application
+import com.haichenyi.kotlinmvp.utils.ToastUtils
 
 /**
  * @Author haichenyi
@@ -12,5 +13,6 @@ class MyApp :Application(){
 
     override fun onCreate() {
         super.onCreate()
+        ToastUtils.init(this)
     }
 }
