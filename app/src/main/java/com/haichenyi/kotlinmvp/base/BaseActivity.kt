@@ -20,6 +20,9 @@ import com.haichenyi.kotlinmvp.R
 import com.haichenyi.kotlinmvp.utils.getColorRes
 import com.haichenyi.kotlinmvp.utils.getDrawableRes
 import com.haichenyi.kotlinmvp.utils.inflate
+import dagger.android.AndroidInjection
+import dagger.android.support.DaggerAppCompatActivity
+import javax.inject.Inject
 
 /**
  * @Author haichenyi
@@ -27,7 +30,7 @@ import com.haichenyi.kotlinmvp.utils.inflate
  * @Date 2019/7/15-10:14
  * @Home haichenyi.com
  */
-abstract class BaseActivity : AppCompatActivity(), View.OnClickListener, BaseView {
+abstract class BaseActivity<P : BasePresenter<BaseView>> : DaggerAppCompatActivity(), View.OnClickListener, BaseView {
     private lateinit var toolbar: Toolbar
     protected lateinit var flBack: FrameLayout
     private lateinit var tvBack: TextView
@@ -35,6 +38,10 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener, BaseVie
     protected lateinit var flMore: FrameLayout
     private lateinit var tvMore: TextView
     private var loadingDialog: AlertDialog? = null
+
+    @JvmField
+    @Inject
+    var presenter: P? = null
 
     companion object {
         //用于存放当前activity的引用
@@ -89,8 +96,9 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener, BaseVie
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         activities.remove(this)
+        presenter = null
+        super.onDestroy()
     }
 
     /**
@@ -111,7 +119,7 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener, BaseVie
     /**
      * 设置标题
      */
-    fun setCenter(title: String): BaseActivity {
+    fun setCenter(title: String): BaseActivity<P> {
         tvCenter.text = title
         return this
     }
@@ -119,7 +127,7 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener, BaseVie
     /**
      * 初始化标题栏
      */
-    fun initToolbar(isShowBack: Boolean, isShowMore: Boolean): BaseActivity {
+    fun initToolbar(isShowBack: Boolean, isShowMore: Boolean): BaseActivity<P> {
         setSupportActionBar(toolbar)
         if (isAttachToolbar()) {
             supportActionBar?.show()
@@ -135,7 +143,7 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener, BaseVie
     /**
      * 设置状态栏颜色
      */
-    fun setStatusColor(color: Int): BaseActivity {
+    fun setStatusColor(color: Int): BaseActivity<P> {
         window.statusBarColor = getColorRes(color)
         return this
     }
@@ -143,7 +151,7 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener, BaseVie
     /**
      * 设置toolbar右边的标题
      */
-    fun setMoreTitle(text: String): BaseActivity {
+    fun setMoreTitle(text: String): BaseActivity<P> {
         tvMore.background = null
         tvMore.text = text
         return this
@@ -152,7 +160,7 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener, BaseVie
     /**
      * 设置toolbar右边的图片
      */
-    fun setMoreBack(@DrawableRes drawableId: Int): BaseActivity {
+    fun setMoreBack(@DrawableRes drawableId: Int): BaseActivity<P> {
         tvMore.text = ""
         tvMore.background = getDrawableRes(drawableId)
         return this
@@ -161,7 +169,7 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener, BaseVie
     /**
      * 设置标题栏背景颜色
      */
-    fun setToolbarColor(color: Int): BaseActivity {
+    fun setToolbarColor(color: Int): BaseActivity<P> {
         toolbar.setBackgroundColor(getColorRes(color))
         return this
     }

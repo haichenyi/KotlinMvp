@@ -4,9 +4,10 @@ import android.os.Bundle
 import android.view.View
 import com.haichenyi.kotlinmvp.R
 import com.haichenyi.kotlinmvp.base.BaseActivity
+import com.haichenyi.kotlinmvp.presenter.MainPresenter
 import com.haichenyi.kotlinmvp.utils.showToast
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity<MainPresenter>() {
     override fun isFullScreen() = false
 
     override fun isAttachToolbar() = true
@@ -23,6 +24,7 @@ class MainActivity : BaseActivity() {
         flMore.postDelayed({
             hideLoading()
         }, 2000L)
+        presenter?.loadData()
     }
 
     override fun initView() {

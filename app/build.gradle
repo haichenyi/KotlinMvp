@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -35,5 +37,12 @@ dependencies {
     // debugImplementation because LeakCanary should only run in debug builds.
     // Don't need init,it will be auto init
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-3'
-    implementation 'com.android.support:multidex:1.0.3'
+
+    //dagger2_start
+    implementation 'com.google.dagger:dagger-android:2.23.2'
+    implementation 'com.google.dagger:dagger-android-support:2.23.2' // if you use the support libraries
+    kapt 'com.google.dagger:dagger-android-processor:2.23.2'
+    implementation 'com.google.dagger:dagger:2.23.2'
+    kapt 'com.google.dagger:dagger-compiler:2.23.2'
+    //dagger2_end
 }
