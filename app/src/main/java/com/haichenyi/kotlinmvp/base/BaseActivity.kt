@@ -7,13 +7,15 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.appcompat.widget.Toolbar
 import com.haichenyi.kotlinmvp.R
 import com.haichenyi.kotlinmvp.utils.getColorRes
 import com.haichenyi.kotlinmvp.utils.getDrawableRes
@@ -26,12 +28,12 @@ import com.haichenyi.kotlinmvp.utils.inflate
  * @Home haichenyi.com
  */
 abstract class BaseActivity : AppCompatActivity(), View.OnClickListener, BaseView {
-    private var clToolbar: ConstraintLayout? = null
-    protected var flBack: FrameLayout? = null
-    private var tvBack: TextView? = null
-    private var tvCenter: TextView? = null
-    protected var flMore: FrameLayout? = null
-    private var tvMore: TextView? = null
+    private lateinit var toolbar: Toolbar
+    protected lateinit var flBack: FrameLayout
+    private lateinit var tvBack: TextView
+    private lateinit var tvCenter: TextView
+    protected lateinit var flMore: FrameLayout
+    private lateinit var tvMore: TextView
     private var loadingDialog: AlertDialog? = null
 
     companion object {
@@ -42,19 +44,28 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener, BaseVie
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activities.add(this)
+        if (isFullScreen()) {
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        }
         //设置竖屏
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         val rootView = inflate(R.layout.activity_base, null)
+        val layoutId = getLayoutRes()
         initToolbarView(rootView)
-        if (getLayoutRes() == 0) {
+        if (layoutId == 0) {
             setContentView(rootView)
         } else {
-            setContentView(inflate(getLayoutRes(), rootView as ViewGroup, true))
-        }
+            if (isAttachToolbar()) {
+                setContentView(inflate(layoutId, rootView as ViewGroup, true))
+            } else {
+                setContentView(layoutId)
+            }
 
+        }
         initView()
         initData()
-        setOnClick(flBack!!, flMore!!)
+        setOnClick(flBack, flMore)
     }
 
     open fun initData() {
@@ -69,13 +80,12 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener, BaseVie
      * 初始化toolbar布局的控件
      */
     private fun initToolbarView(rootView: View) {
-        val toolbarLayout = rootView.findViewById<View>(R.id.toolbarLayout)
-        clToolbar = toolbarLayout.findViewById(R.id.clToolbar)
-        flBack = toolbarLayout.findViewById(R.id.flBack)
-        tvBack = toolbarLayout.findViewById(R.id.tvBack)
-        tvCenter = toolbarLayout.findViewById(R.id.tvCenter)
-        flMore = toolbarLayout.findViewById(R.id.flMore)
-        tvMore = toolbarLayout.findViewById(R.id.tvMore)
+        toolbar = rootView.findViewById(R.id.toolbar)
+        flBack = toolbar.findViewById(R.id.flBack)
+        tvBack = toolbar.findViewById(R.id.tvBack)
+        tvCenter = toolbar.findViewById(R.id.tvCenter)
+        flMore = toolbar.findViewById(R.id.flMore)
+        tvMore = toolbar.findViewById(R.id.tvMore)
     }
 
     override fun onDestroy() {
@@ -89,20 +99,36 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener, BaseVie
     abstract fun getLayoutRes(): Int
 
     /**
+     * 设置是否全屏
+     */
+    abstract fun isFullScreen(): Boolean
+
+    /**
+     * 设置是否需要toolbar
+     */
+    abstract fun isAttachToolbar(): Boolean
+
+    /**
      * 设置标题
      */
     fun setCenter(title: String): BaseActivity {
-        tvCenter?.text = title
+        tvCenter.text = title
         return this
     }
 
     /**
      * 初始化标题栏
      */
-    fun initToolbar(isToolbar: Boolean, isBack: Boolean, isMore: Boolean): BaseActivity {
-        clToolbar?.visibility = if (isToolbar) View.VISIBLE else View.GONE
-        flBack?.visibility = if (isBack) View.VISIBLE else View.INVISIBLE
-        flMore?.visibility = if (isMore) View.VISIBLE else View.INVISIBLE
+    fun initToolbar(isShowBack: Boolean, isShowMore: Boolean): BaseActivity {
+        setSupportActionBar(toolbar)
+        if (isAttachToolbar()) {
+            supportActionBar?.show()
+            flBack.visibility = if (isShowBack) View.VISIBLE else View.INVISIBLE
+            flMore.visibility = if (isShowMore) View.VISIBLE else View.INVISIBLE
+        } else {
+            supportActionBar?.hide()
+        }
+
         return this
     }
 
@@ -118,8 +144,8 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener, BaseVie
      * 设置toolbar右边的标题
      */
     fun setMoreTitle(text: String): BaseActivity {
-        tvMore?.background = null
-        tvMore?.text = text
+        tvMore.background = null
+        tvMore.text = text
         return this
     }
 
@@ -127,8 +153,8 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener, BaseVie
      * 设置toolbar右边的图片
      */
     fun setMoreBack(@DrawableRes drawableId: Int): BaseActivity {
-        tvMore?.text = ""
-        tvMore?.background = getDrawableRes(drawableId)
+        tvMore.text = ""
+        tvMore.background = getDrawableRes(drawableId)
         return this
     }
 
@@ -136,7 +162,7 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener, BaseVie
      * 设置标题栏背景颜色
      */
     fun setToolbarColor(color: Int): BaseActivity {
-        clToolbar?.setBackgroundColor(getColorRes(color))
+        toolbar.setBackgroundColor(getColorRes(color))
         return this
     }
 

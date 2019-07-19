@@ -4,6 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <include
-            android:id="@+id/toolbarLayout"
+            android:id="@+id/toolbar"
             layout="@layout/toolbar"/>
+    <View style="@style/HorizontalLine" />
 </LinearLayout>
