@@ -13,14 +13,14 @@ class BaseLiveData<T> : LiveData<T>() {
     /**
      * 回调在主线程
      */
-    protected fun callBackUi(t: T) {
+    fun callBackUi(t: T) {
         postValue(t)
     }
 
     /**
      * 回调在当前线程
      */
-    protected fun callBack(t: T) {
+    fun callBack(t: T) {
         value = t
     }
 }

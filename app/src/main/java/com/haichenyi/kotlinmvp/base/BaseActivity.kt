@@ -17,6 +17,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.haichenyi.kotlinmvp.R
+import com.haichenyi.kotlinmvp.third.livedata.LiveDataManager
 import com.haichenyi.kotlinmvp.utils.getColorRes
 import com.haichenyi.kotlinmvp.utils.getDrawableRes
 import com.haichenyi.kotlinmvp.utils.inflate
@@ -70,18 +71,21 @@ abstract class BaseActivity<P : BasePresenter<BaseView>> : DaggerAppCompatActivi
             }
 
         }
+        if (null != presenter) {
+            lifecycle.addObserver(presenter!!)
+            presenter?.attachView(this)
+        }
+        initLiveData()
         initView()
         initData()
         setOnClick(flBack, flMore)
     }
 
-    open fun initData() {
+    abstract fun initLiveData()
 
-    }
+    abstract fun initData()
 
-    open fun initView() {
-
-    }
+    abstract fun initView()
 
     /**
      * 初始化toolbar布局的控件
@@ -97,6 +101,9 @@ abstract class BaseActivity<P : BasePresenter<BaseView>> : DaggerAppCompatActivi
 
     override fun onDestroy() {
         activities.remove(this)
+        if (null != presenter) {
+            lifecycle.removeObserver(presenter!!)
+        }
         presenter = null
         super.onDestroy()
     }

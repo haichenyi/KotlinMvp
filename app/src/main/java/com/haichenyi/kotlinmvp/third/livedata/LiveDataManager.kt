@@ -8,14 +8,11 @@ import android.util.ArrayMap
  * @Date 2019/7/19-17:15
  * @Home haichenyi.com
  */
-class LiveDataManager<T> {
-    val liveDataMap = ArrayMap<String, BaseLiveData<T>>()
-    val listObjectMap = ArrayMap<Any, MutableList<String>>()
-    val instance: LiveDataManager<T> by lazy {
-        LiveDataManager()
-    }
+object LiveDataManager {
+    private val liveDataMap = ArrayMap<String, BaseLiveData<*>>()
+    private val listObjectMap = ArrayMap<Any, MutableList<String>>()
 
-    fun putLiveData(any: Any, key: String, liveData: BaseLiveData<T>) {
+    fun <T> putLiveData(any: Any, key: String, liveData: BaseLiveData<T>) {
         val liveDataKey = any.toString().plus(key)
         putLiveData(liveDataKey, liveData)
         putObjectKey(any, liveDataKey)
@@ -29,7 +26,7 @@ class LiveDataManager<T> {
      * @param <T>      泛型
      */
     @Synchronized
-    fun putLiveData(key: String, liveData: BaseLiveData<T>) {
+    fun <T> putLiveData(key: String, liveData: BaseLiveData<T>) {
         if (null == liveDataMap[key]) {
             liveDataMap[key] = liveData
         }
@@ -41,7 +38,7 @@ class LiveDataManager<T> {
      * @param any Any
      * @param key    key
      */
-    fun putObjectKey(any: Any, key: String) {
+    private fun putObjectKey(any: Any, key: String) {
         var list = listObjectMap[any]
         if (null == list) {
             list = ArrayList()
@@ -59,7 +56,14 @@ class LiveDataManager<T> {
      * @param key 键
      * @return BaseLiveData
      */
-    fun getLiveData(key: String): BaseLiveData<T>? = liveDataMap[key]
+    fun <T> getLiveData(key: String): BaseLiveData<T>? = liveDataMap[key] as BaseLiveData<T>
+
+    /**
+     *  是否已经注册过了
+     */
+    fun contain(key: String): Boolean {
+        return null == liveDataMap[key]
+    }
 
     /**
      * 移除LiveData对象

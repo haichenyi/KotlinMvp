@@ -14,7 +14,11 @@ import com.haichenyi.kotlinmvp.third.livedata.LiveDataManager
  * @Home haichenyi.com
  */
 open class BasePresenter<V : BaseView> : LifecycleObserver {
-    protected var baseView: V? = null
+    private var baseView: V? = null
+
+    fun attachView(view: V) {
+        this.baseView = view
+    }
 
     /**
      * 设置LiveData的Observer
@@ -25,12 +29,20 @@ open class BasePresenter<V : BaseView> : LifecycleObserver {
      * @param <T>      数据类型
      */
     @Synchronized
-    fun <T> setObserver(any: Any, key: String, observer: Observer<T>) {
-        if (null == LiveDataManager<T>().instance.getLiveData(any.toString().plus(key))) {
+    fun <T> setObserver(key: String, observer: Observer<T>) {
+        if (LiveDataManager.contain(this.toString().plus(key))) {
             val liveData = BaseLiveData<T>()
             liveData.observe(baseView!!, observer)
-            LiveDataManager<T>().instance.putLiveData(any, key, liveData)
+            LiveDataManager.putLiveData(this, key, liveData)
         }
+    }
+
+    fun <T> callBackUi(key: String, t: T) {
+        LiveDataManager.getLiveData<T>(this.toString().plus(key))?.callBackUi(t)
+    }
+
+    fun <T> callBack(key: String, t: T) {
+        LiveDataManager.getLiveData<T>(this.toString().plus(key))?.callBack(t)
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
@@ -60,6 +72,7 @@ open class BasePresenter<V : BaseView> : LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroy() {
+        LiveDataManager.clean(this)
         baseView = null
     }
 }
