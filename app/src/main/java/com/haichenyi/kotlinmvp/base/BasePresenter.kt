@@ -4,8 +4,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.Observer
 import androidx.lifecycle.OnLifecycleEvent
+import com.haichenyi.kotlinmvp.model.DataManager
+import com.haichenyi.kotlinmvp.model.http.HttpObserver
 import com.haichenyi.kotlinmvp.third.livedata.BaseLiveData
 import com.haichenyi.kotlinmvp.third.livedata.LiveDataManager
+import com.uber.autodispose.AutoDispose
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
+import io.reactivex.Flowable
+import javax.inject.Inject
 
 /**
  * @Author haichenyi
@@ -14,10 +20,20 @@ import com.haichenyi.kotlinmvp.third.livedata.LiveDataManager
  * @Home haichenyi.com
  */
 open class BasePresenter<V : BaseView> : LifecycleObserver {
-    private var baseView: V? = null
+
+    @JvmField
+    @Inject
+    protected var dataManager: DataManager? = null
+
+    protected var baseView: V? = null
 
     fun attachView(view: V) {
         this.baseView = view
+    }
+
+    fun <T> request(flow: Flowable<T>, observer: HttpObserver<T>) {
+        flow.`as`(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(baseView)))
+            .subscribe(observer)
     }
 
     /**
@@ -74,5 +90,6 @@ open class BasePresenter<V : BaseView> : LifecycleObserver {
     fun onDestroy() {
         LiveDataManager.clean(this)
         baseView = null
+        dataManager = null
     }
 }

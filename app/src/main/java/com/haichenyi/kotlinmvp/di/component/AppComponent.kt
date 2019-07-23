@@ -3,6 +3,7 @@ package com.haichenyi.kotlinmvp.di.component
 import com.haichenyi.kotlinmvp.base.MyApp
 import com.haichenyi.kotlinmvp.di.module.AllActivitiesModule
 import com.haichenyi.kotlinmvp.di.module.AppModule
+import com.haichenyi.kotlinmvp.di.module.HttpModule
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
@@ -19,7 +20,7 @@ import javax.inject.Singleton
  * @Email: haichenyi@yeah.net
  */
 @Singleton
-@Component(modules = [AndroidSupportInjectionModule::class, AppModule::class, AllActivitiesModule::class])
+@Component(modules = [AndroidSupportInjectionModule::class, HttpModule::class, AppModule::class, AllActivitiesModule::class])
 interface AppComponent : AndroidInjector<MyApp> {
 
     @Component.Builder

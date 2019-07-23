@@ -1,4 +1,4 @@
-package com.haichenyi.kotlinmvp.model;
+package com.haichenyi.kotlinmvp.third.livedata.bean;
 
 /**
  * @Author haichenyi

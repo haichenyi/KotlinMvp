@@ -7,5 +7,4 @@ package com.haichenyi.kotlinmvp.third
  * @Home haichenyi.com
  */
 object Third {
-
 }
