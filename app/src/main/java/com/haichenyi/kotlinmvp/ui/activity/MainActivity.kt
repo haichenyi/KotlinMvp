@@ -5,6 +5,8 @@ import android.view.View
 import androidx.lifecycle.Observer
 import com.haichenyi.kotlinmvp.R
 import com.haichenyi.kotlinmvp.base.BaseActivity
+import com.haichenyi.kotlinmvp.base.MyApp
+import com.haichenyi.kotlinmvp.model.sharepreference.SpReal
 import com.haichenyi.kotlinmvp.third.livedata.bean.Bean
 import com.haichenyi.kotlinmvp.presenter.MainPresenter
 import com.haichenyi.kotlinmvp.utils.showToast
@@ -21,6 +23,7 @@ class MainActivity : BaseActivity<MainPresenter>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
     override fun initLiveData() {

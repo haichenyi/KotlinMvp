@@ -11,9 +11,8 @@ import javax.inject.Inject
  * @Date 2019/7/22-16:19
  * @Home haichenyi.com
  */
-class RetrofitHelper @Inject constructor(private var httpApi: HttpApi) : HttpHelper {
+class HttpReal @Inject constructor(private var httpApi: HttpApi) : HttpHelper {
 
     override fun getRegisterCode(accountName: String): Flowable<CodeBean> =
         httpApi.getRegisterCode(accountName).compose(MyRxUtils.handResult())
-
 }

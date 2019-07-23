@@ -1,7 +1,7 @@
 package com.haichenyi.kotlinmvp.di.module
 
 import com.haichenyi.kotlinmvp.model.http.api.HttpHelper
-import com.haichenyi.kotlinmvp.model.http.api.RetrofitHelper
+import com.haichenyi.kotlinmvp.model.http.api.HttpReal
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -17,5 +17,5 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideHttpHelper(retrofitHelper: RetrofitHelper): HttpHelper = retrofitHelper
+    fun provideHttpHelper(httpReal: HttpReal): HttpHelper = httpReal
 }

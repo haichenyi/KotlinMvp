@@ -28,7 +28,8 @@ class MainPresenter @Inject internal constructor() : BasePresenter<BaseView>() {
         LogUtil.v(LogUtil.LOG_WZ, "1111")
         callBackUi("qwer", Bean())
         callBack("asd", Bean1())
-        request(dataManager!!.getRegisterCode("12345678912"), object : HttpObserver<CodeBean>(baseView = baseView) {
+        spIml!!.putValue("qwe","asd")
+        request(httpIml!!.getRegisterCode("12345678912"), object : HttpObserver<CodeBean>(baseView = baseView) {
             override fun onSuccess(t: CodeBean) {
                 LogUtil.v(LogUtil.LOG_WZ, "success")
             }

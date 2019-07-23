@@ -4,8 +4,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.Observer
 import androidx.lifecycle.OnLifecycleEvent
-import com.haichenyi.kotlinmvp.model.DataManager
+import com.haichenyi.kotlinmvp.model.http.api.HttpIml
 import com.haichenyi.kotlinmvp.model.http.HttpObserver
+import com.haichenyi.kotlinmvp.model.sharepreference.SpIml
 import com.haichenyi.kotlinmvp.third.livedata.BaseLiveData
 import com.haichenyi.kotlinmvp.third.livedata.LiveDataManager
 import com.uber.autodispose.AutoDispose
@@ -23,8 +24,12 @@ open class BasePresenter<V : BaseView> : LifecycleObserver {
 
     @JvmField
     @Inject
-    protected var dataManager: DataManager? = null
+    protected var httpIml: HttpIml? = null
 
+    @JvmField
+    @Inject
+    protected var spIml: SpIml? = null
+    
     protected var baseView: V? = null
 
     fun attachView(view: V) {
@@ -90,6 +95,7 @@ open class BasePresenter<V : BaseView> : LifecycleObserver {
     fun onDestroy() {
         LiveDataManager.clean(this)
         baseView = null
-        dataManager = null
+        httpIml = null
+        spIml = null
     }
 }

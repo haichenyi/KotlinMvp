@@ -13,12 +13,17 @@ import dagger.android.support.DaggerApplication
  * @Home haichenyi.com
  */
 class MyApp : DaggerApplication() {
+    companion object {
+        lateinit var instance: MyApp
+    }
 
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> =DaggerAppComponent.builder().create(this)
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
+        DaggerAppComponent.builder().create(this)
 
     override fun onCreate() {
         super.onCreate()
         ToastUtils.init(this)
+        instance = this
     }
 
 }
