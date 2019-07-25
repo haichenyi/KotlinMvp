@@ -1,15 +1,11 @@
 package com.haichenyi.kotlinmvp.di.module
 
-import android.util.Log
 import com.haichenyi.kotlinmvp.di.qualifier.ApiUrl
 import com.haichenyi.kotlinmvp.model.http.api.HttpApi
 import com.haichenyi.kotlinmvp.model.http.api.HttpProtocol
 import com.haichenyi.kotlinmvp.utils.LogUtil
 import dagger.Module
 import dagger.Provides
-import okhttp3.Cookie
-import okhttp3.CookieJar
-import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -29,9 +25,8 @@ class HttpModule {
 
     @Provides
     @Singleton
-    fun providerOkhttpBuilder(): OkHttpClient.Builder {
-        return OkHttpClient.Builder()
-            /*.cookieJar(object : CookieJar {
+    fun providerOkHttpBuilder(): OkHttpClient.Builder {
+        /*.cookieJar(object : CookieJar {
                 override fun loadForRequest(url: HttpUrl): List<Cookie> {
 
                 }
@@ -40,10 +35,12 @@ class HttpModule {
 
                 }
 
-            })*/.connectTimeout(10, TimeUnit.SECONDS)
-            .readTimeout(10, TimeUnit.SECONDS)
-            .writeTimeout(10, TimeUnit.SECONDS)
-
+            })*/
+        return OkHttpClient.Builder().apply {
+            connectTimeout(10, TimeUnit.SECONDS)
+            readTimeout(10, TimeUnit.SECONDS)
+            writeTimeout(10, TimeUnit.SECONDS)
+        }
     }
 
     @Provides
@@ -55,7 +52,10 @@ class HttpModule {
             }
         })
         interceptor.level = HttpLoggingInterceptor.Level.BODY
-        return builder.addInterceptor(interceptor).build()
+        return builder.run {
+            addInterceptor(interceptor)
+            build()
+        }
     }
 
     @Provides
@@ -79,10 +79,12 @@ class HttpModule {
 
 
     private fun createRetrofit(builder: Retrofit.Builder, client: OkHttpClient, host: String): Retrofit {
-        return builder.client(client)
-            .baseUrl(host)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .build()
+        return builder.run {
+            client(client)
+            baseUrl(host)
+            addConverterFactory(GsonConverterFactory.create())
+            addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            build()
+        }
     }
 }
