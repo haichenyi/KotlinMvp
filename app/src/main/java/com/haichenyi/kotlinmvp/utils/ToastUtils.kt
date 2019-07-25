@@ -6,7 +6,7 @@ import android.widget.Toast
 
 /**
  * @Author haichenyi
- * @Desc
+ * @Desc Toast工具类
  * @Date 2019/7/15-16:58
  * @Home haichenyi.com
  */

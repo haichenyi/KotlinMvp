@@ -4,7 +4,12 @@ import android.util.Log
 import com.haichenyi.kotlinmvp.BuildConfig
 import java.util.*
 
-
+/**
+ * @Author haichenyi
+ * @Desc 日志打印工具类
+ * @Date 2019/7/15-16:58
+ * @Home haichenyi.com
+ */
 object LogUtil {
     const val LOG_WZ = "wz"
     private const val V = Log.VERBOSE

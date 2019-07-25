@@ -1,6 +1,6 @@
 package com.haichenyi.kotlinmvp.model.http.api
 
-import com.haichenyi.kotlinmvp.model.bean.CodeBean
+import com.haichenyi.kotlinmvp.model.bean.IpBean
 import io.reactivex.Flowable
 
 /**
@@ -11,10 +11,10 @@ import io.reactivex.Flowable
  */
 interface HttpHelper {
     /**
-     * 获取注册验证码.
+     * 获取IP地址.
      *
-     * @param accountName 手机号
-     * @return CodeBean
+     * @param accountName name
+     * @return IpBean
      */
-    fun getRegisterCode(accountName: String): Flowable<CodeBean>
+    fun getIp(accountName: String): Flowable<IpBean>
 }

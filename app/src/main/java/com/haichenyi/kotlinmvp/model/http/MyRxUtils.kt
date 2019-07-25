@@ -3,12 +3,10 @@ package com.haichenyi.kotlinmvp.model.http
 import com.haichenyi.kotlinmvp.model.http.api.HttpCode
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
-import io.reactivex.FlowableOnSubscribe
 import io.reactivex.FlowableTransformer
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import org.reactivestreams.Subscriber
 
 /**
  * @Author haichenyi

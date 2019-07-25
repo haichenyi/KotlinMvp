@@ -1,6 +1,6 @@
 package com.haichenyi.kotlinmvp.model.http.api
 
-import com.haichenyi.kotlinmvp.model.bean.CodeBean
+import com.haichenyi.kotlinmvp.model.bean.IpBean
 import com.haichenyi.kotlinmvp.model.http.HttpResult
 import io.reactivex.Flowable
 import retrofit2.http.GET
@@ -14,11 +14,11 @@ import retrofit2.http.Query
  */
 interface HttpApi {
     /**
-     * 获取注册验证码.
+     * 获取IP地址.
      *
-     * @param phone 手机号
-     * @return CodeBean
+     * @param name name
+     * @return IpBean
      */
-    @GET(HttpProtocol.HTTP_REGISTER_GET_CODE)
-    fun getRegisterCode(@Query("accountName") phone: String): Flowable<HttpResult<CodeBean>>
+    @GET(HttpProtocol.HTTP_GET_IP)
+    fun getIp(@Query("ip") name: String): Flowable<HttpResult<IpBean>>
 }
