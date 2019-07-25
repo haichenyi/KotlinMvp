@@ -9,6 +9,7 @@ import com.haichenyi.kotlinmvp.model.http.HttpObserver
 import com.haichenyi.kotlinmvp.model.sharepreference.SpIml
 import com.haichenyi.kotlinmvp.third.livedata.BaseLiveData
 import com.haichenyi.kotlinmvp.third.livedata.LiveDataManager
+import com.haichenyi.kotlinmvp.third.router.RouterIml
 import com.uber.autodispose.AutoDispose
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import io.reactivex.Flowable
@@ -24,12 +25,16 @@ open class BasePresenter<V : BaseView> : LifecycleObserver {
 
     @JvmField
     @Inject
-    protected var httpIml: HttpIml? = null
+    var httpIml: HttpIml? = null
 
     @JvmField
     @Inject
-    protected var spIml: SpIml? = null
-    
+    var spIml: SpIml? = null
+
+    @JvmField
+    @Inject
+    var routerIml: RouterIml? = null
+
     protected var baseView: V? = null
 
     fun attachView(view: V) {
@@ -97,5 +102,6 @@ open class BasePresenter<V : BaseView> : LifecycleObserver {
         baseView = null
         httpIml = null
         spIml = null
+        routerIml = null
     }
 }

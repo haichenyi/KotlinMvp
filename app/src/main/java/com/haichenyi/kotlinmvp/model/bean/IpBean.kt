@@ -6,4 +6,4 @@ package com.haichenyi.kotlinmvp.model.bean
  * @Date 2019/7/22-17:32
  * @Home haichenyi.com
  */
-class IpBean(val city: String = "", val country: String = "", val isp: String = "", val ip: String = "")
+class IpBean(var city: String = "", var country: String = "", var isp: String = "", var ip: String = "")

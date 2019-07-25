@@ -15,6 +15,14 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            kapt {
+                arguments {
+                    arg("AROUTER_MODULE_NAME", project.getName())
+                    arg("AROUTER_GENERATE_DOC", "enable")
+                }
+            }
+        }
     }
     buildTypes {
         release {
@@ -26,7 +34,9 @@ android {
         sourceCompatibility 1.8
         targetCompatibility 1.8
     }
+
 }
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -64,4 +74,7 @@ dependencies {
     //网络请求RxJava+Retrofit+OkHttp_end
     //权限管理
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
+
+    implementation 'com.alibaba:arouter-api:1.5.0'
+    kapt 'com.alibaba:arouter-compiler:1.2.2'
 }

@@ -6,5 +6,7 @@
 
 ## 权限管理：RxPermission2
 
+## ARouter框架模块间的路由，通信，解耦
+
 
 

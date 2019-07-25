@@ -16,6 +16,7 @@ import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.alibaba.android.arouter.launcher.ARouter
 import com.haichenyi.kotlinmvp.R
 import com.haichenyi.kotlinmvp.third.livedata.LiveDataManager
 import com.haichenyi.kotlinmvp.utils.getColorRes
@@ -51,6 +52,7 @@ abstract class BaseActivity<P : BasePresenter<BaseView>> : DaggerAppCompatActivi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ARouter.getInstance().inject(this)
         activities.add(this)
         if (isFullScreen()) {
             requestWindowFeature(Window.FEATURE_NO_TITLE)

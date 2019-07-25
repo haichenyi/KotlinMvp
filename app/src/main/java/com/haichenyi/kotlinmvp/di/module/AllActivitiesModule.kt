@@ -2,6 +2,7 @@ package com.haichenyi.kotlinmvp.di.module
 
 import com.haichenyi.kotlinmvp.di.component.ActComponent
 import com.haichenyi.kotlinmvp.ui.activity.MainActivity
+import com.haichenyi.kotlinmvp.ui.activity.TestActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -16,4 +17,7 @@ import dagger.android.ContributesAndroidInjector
 abstract class AllActivitiesModule {
     @ContributesAndroidInjector
     internal abstract fun contributeMainActivityInjector(): MainActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun contributeTestActivityInjector(): TestActivity
 }

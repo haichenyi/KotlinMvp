@@ -57,7 +57,10 @@ class MainActivity : BaseActivity<MainPresenter>() {
     override fun onClick(v: View?) {
         super.onClick(v)
         when (v) {
-            flMore -> showToast("相机")
+            flMore -> {
+                showToast("相机")
+                presenter?.routerIml?.jumpTestActivity()
+            }
         }
     }
 }
