@@ -8,8 +8,8 @@ package com.haichenyi.kotlinmvp.model.http.api
  */
 object HttpProtocol {
     //http://127.0.0.1:8080/examples/info.json
-    const val HTTP_HOST = "http://192.168.191.1"
-    private const val HTTP_PORT = ":8080/"
+    const val HTTP_HOST = "http://172.30.88.1"
+    private const val HTTP_PORT = ":8080"
     private const val HTTP_APP_TYPE = "/examples"
     /**
      * 获取注册验证码

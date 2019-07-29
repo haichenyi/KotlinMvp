@@ -10,6 +10,7 @@ import com.haichenyi.kotlinmvp.model.bean.IpBean
 import com.haichenyi.kotlinmvp.third.livedata.bean.Bean
 import com.haichenyi.kotlinmvp.presenter.MainPresenter
 import com.haichenyi.kotlinmvp.third.livedata.LiveDataKey
+import com.haichenyi.kotlinmvp.utils.LogUtil
 import com.haichenyi.kotlinmvp.utils.PermissionUtils
 import com.haichenyi.kotlinmvp.utils.showToast
 import kotlinx.android.synthetic.main.activity_main.*
@@ -31,7 +32,9 @@ class MainActivity : BaseActivity<MainPresenter>() {
     override fun initLiveData() {
         presenter?.initLiveData()
         presenter?.setObserver(LiveDataKey.IP_KEY, Observer<IpBean> {
-            tvContent.text = it.country.plus("_").plus(it.city).plus("_").plus(it.isp).plus(":").plus(it.ip)
+            val msg = it.country.plus("_").plus(it.city).plus("_").plus(it.isp).plus(":").plus(it.ip)
+            LogUtil.v(LogUtil.LOG_WZ, msg)
+            tvContent.text = msg
         })
     }
 

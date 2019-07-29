@@ -1,16 +1,19 @@
 package com.haichenyi.kotlinmvp.di.module
 
+import com.haichenyi.kotlinmvp.base.MyApp
 import com.haichenyi.kotlinmvp.di.qualifier.ApiUrl
 import com.haichenyi.kotlinmvp.model.http.api.HttpApi
 import com.haichenyi.kotlinmvp.model.http.api.HttpProtocol
 import com.haichenyi.kotlinmvp.utils.LogUtil
 import dagger.Module
 import dagger.Provides
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -38,6 +41,8 @@ class HttpModule {
             })*/
         return OkHttpClient.Builder().apply {
             connectTimeout(10, TimeUnit.SECONDS)
+            val maxCacheSize: Long = 100 * 1024 * 1024
+            cache(Cache(File(MyApp.instance.cacheDir.absolutePath), maxCacheSize))
             readTimeout(10, TimeUnit.SECONDS)
             writeTimeout(10, TimeUnit.SECONDS)
         }
@@ -54,6 +59,9 @@ class HttpModule {
         interceptor.level = HttpLoggingInterceptor.Level.BODY
         return builder.run {
             addInterceptor(interceptor)
+//            addInterceptor(OfflineCacheInterceptor())
+//            addNetworkInterceptor(NetworkCacheInterceptor())
+//            addNetworkInterceptor(CacheInterceptor())
             build()
         }
     }

@@ -4,6 +4,7 @@ import com.haichenyi.kotlinmvp.model.bean.IpBean
 import com.haichenyi.kotlinmvp.model.http.HttpResult
 import io.reactivex.Flowable
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.Query
 
 /**
@@ -19,6 +20,7 @@ interface HttpApi {
      * @param name name
      * @return IpBean
      */
+    @Headers("Cache-Control:public ,max-age=60")
     @GET(HttpProtocol.HTTP_GET_IP)
     fun getIp(@Query("ip") name: String): Flowable<HttpResult<IpBean>>
 }
