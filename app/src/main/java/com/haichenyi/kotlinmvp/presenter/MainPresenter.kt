@@ -3,6 +3,7 @@ package com.haichenyi.kotlinmvp.presenter
 import androidx.lifecycle.Observer
 import com.haichenyi.kotlinmvp.base.BasePresenter
 import com.haichenyi.kotlinmvp.base.BaseView
+import com.haichenyi.kotlinmvp.base.MyApp
 import com.haichenyi.kotlinmvp.model.bean.IpBean
 import com.haichenyi.kotlinmvp.model.http.HttpObserver
 import com.haichenyi.kotlinmvp.third.livedata.LiveDataKey
@@ -28,8 +29,19 @@ class MainPresenter @Inject internal constructor() : BasePresenter<BaseView>() {
     fun loadData() {
         LogUtil.v(LogUtil.LOG_WZ, "1111")
         callBack("asd", Bean1())
-        spIml!!.putValue("qwe", "asd")
-        request(httpIml!!.getIp("myip"), object : HttpObserver<IpBean>(baseView = baseView) {
+        MyApp.spHelper.putValue("qwe", "asd")
+        /*request(httpIml!!.getIp("myip"), object : HttpObserver<IpBean>(baseView = baseView) {
+            override fun onSuccess(t: IpBean) {
+                callBackUi(LiveDataKey.IP_KEY, t)
+            }
+
+            override fun onFailed(t: Throwable) {
+                super.onFailed(t)
+                LogUtil.v(LogUtil.LOG_WZ, t.message!!)
+            }
+
+        })*/
+        request(MyApp.httpHelper.getIp("myip"), object : HttpObserver<IpBean>(baseView = baseView) {
             override fun onSuccess(t: IpBean) {
                 callBackUi(LiveDataKey.IP_KEY, t)
             }

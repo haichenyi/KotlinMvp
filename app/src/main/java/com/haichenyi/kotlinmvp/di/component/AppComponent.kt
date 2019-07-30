@@ -4,6 +4,9 @@ import com.haichenyi.kotlinmvp.base.MyApp
 import com.haichenyi.kotlinmvp.di.module.AllActivitiesModule
 import com.haichenyi.kotlinmvp.di.module.AppModule
 import com.haichenyi.kotlinmvp.di.module.HttpModule
+import com.haichenyi.kotlinmvp.model.http.api.HttpHelper
+import com.haichenyi.kotlinmvp.model.sharepreference.SpHelper
+import com.haichenyi.kotlinmvp.third.router.RouterHelper
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
@@ -25,4 +28,10 @@ interface AppComponent : AndroidInjector<MyApp> {
 
     @Component.Builder
     abstract class Builder : AndroidInjector.Builder<MyApp>()
+
+    fun getHttpHelper(): HttpHelper
+
+    fun getSpHelper(): SpHelper
+
+    fun getRouterHelper(): RouterHelper
 }

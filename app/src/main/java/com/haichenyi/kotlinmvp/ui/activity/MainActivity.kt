@@ -6,6 +6,9 @@ import android.view.View
 import androidx.lifecycle.Observer
 import com.haichenyi.kotlinmvp.R
 import com.haichenyi.kotlinmvp.base.BaseActivity
+import com.haichenyi.kotlinmvp.base.MyApp
+import com.haichenyi.kotlinmvp.di.component.ActComponent
+import com.haichenyi.kotlinmvp.di.component.AppComponent
 import com.haichenyi.kotlinmvp.model.bean.IpBean
 import com.haichenyi.kotlinmvp.third.livedata.bean.Bean
 import com.haichenyi.kotlinmvp.presenter.MainPresenter
@@ -36,6 +39,7 @@ class MainActivity : BaseActivity<MainPresenter>() {
             LogUtil.v(LogUtil.LOG_WZ, msg)
             tvContent.text = msg
         })
+
     }
 
     override fun initView() {
@@ -62,7 +66,7 @@ class MainActivity : BaseActivity<MainPresenter>() {
         when (v) {
             flMore -> {
                 showToast("相机")
-                presenter?.routerIml?.jumpTestActivity()
+                MyApp.routerHelper.jumpTestActivity()
             }
         }
     }

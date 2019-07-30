@@ -23,18 +23,6 @@ import javax.inject.Inject
  */
 open class BasePresenter<V : BaseView> : LifecycleObserver {
 
-    @JvmField
-    @Inject
-    var httpIml: HttpIml? = null
-
-    @JvmField
-    @Inject
-    var spIml: SpIml? = null
-
-    @JvmField
-    @Inject
-    var routerIml: RouterIml? = null
-
     protected var baseView: V? = null
 
     fun attachView(view: V) {
@@ -49,7 +37,6 @@ open class BasePresenter<V : BaseView> : LifecycleObserver {
     /**
      * 设置LiveData的Observer
      *
-     * @param object   当前对象
      * @param key      键
      * @param observer 监听器
      * @param <T>      数据类型
@@ -100,8 +87,5 @@ open class BasePresenter<V : BaseView> : LifecycleObserver {
     fun onDestroy() {
         LiveDataManager.clean(this)
         baseView = null
-        httpIml = null
-        spIml = null
-        routerIml = null
     }
 }
