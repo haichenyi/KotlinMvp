@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 
 /**
  * @Author haichenyi
- * @Desc
+ * @Desc SharedPreferences的接口
  * @Date 2019/7/23-14:05
  * @Home haichenyi.com
  */

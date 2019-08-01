@@ -53,11 +53,12 @@ dependencies {
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-3'
 
     //dagger2_start
-    implementation 'com.google.dagger:dagger-android:2.23.2'
-    implementation 'com.google.dagger:dagger-android-support:2.23.2' // if you use the support libraries
-    kapt 'com.google.dagger:dagger-android-processor:2.23.2'
-    implementation 'com.google.dagger:dagger:2.23.2'
-    kapt 'com.google.dagger:dagger-compiler:2.23.2'
+    def dagger = "2.23.2"
+    implementation "com.google.dagger:dagger-android:$dagger"
+    implementation "com.google.dagger:dagger-android-support:$dagger" // if you use the support libraries
+    kapt "com.google.dagger:dagger-android-processor:$dagger"
+    implementation "com.google.dagger:dagger:$dagger"
+    kapt "com.google.dagger:dagger-compiler:$dagger"
     //dagger2_end
 
     //网络请求RxJava+Retrofit+OkHttp_start
@@ -93,5 +94,6 @@ dependencies {
     // Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
     //room数据库end
-
+    //kotlin协程
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0-RC'
 }

@@ -1,6 +1,8 @@
 package com.haichenyi.kotlinmvp.base
 
+import androidx.room.Room
 import com.alibaba.android.arouter.launcher.ARouter
+import com.haichenyi.kotlinmvp.database.MyDatabases
 import com.haichenyi.kotlinmvp.di.component.DaggerAppComponent
 import com.haichenyi.kotlinmvp.model.http.api.HttpHelper
 import com.haichenyi.kotlinmvp.model.sharepreference.SpHelper

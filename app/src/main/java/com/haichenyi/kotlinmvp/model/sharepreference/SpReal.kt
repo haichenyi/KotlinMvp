@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 /**
  * @Author haichenyi
- * @Desc
+ * @Desc SharedPreferences的具体实现
  * @Date 2019/7/23-14:28
  * @Home haichenyi.com
  */

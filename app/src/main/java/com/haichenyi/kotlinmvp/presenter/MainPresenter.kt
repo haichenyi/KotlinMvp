@@ -30,17 +30,6 @@ class MainPresenter @Inject internal constructor() : BasePresenter<BaseView>() {
         LogUtil.v(LogUtil.LOG_WZ, "1111")
         callBack("asd", Bean1())
         MyApp.spHelper.putValue("qwe", "asd")
-        /*request(httpIml!!.getIp("myip"), object : HttpObserver<IpBean>(baseView = baseView) {
-            override fun onSuccess(t: IpBean) {
-                callBackUi(LiveDataKey.IP_KEY, t)
-            }
-
-            override fun onFailed(t: Throwable) {
-                super.onFailed(t)
-                LogUtil.v(LogUtil.LOG_WZ, t.message!!)
-            }
-
-        })*/
         request(MyApp.httpHelper.getIp("myip"), object : HttpObserver<IpBean>(baseView = baseView) {
             override fun onSuccess(t: IpBean) {
                 callBackUi(LiveDataKey.IP_KEY, t)
