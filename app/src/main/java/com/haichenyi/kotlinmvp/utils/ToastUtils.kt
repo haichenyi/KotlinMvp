@@ -20,6 +20,7 @@ object ToastUtils {
         }
     }
 
+
     fun show(text: String) {
         toast?.setText(text)
         toast?.show()
