@@ -15,14 +15,6 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        javaCompileOptions {
-            kapt {
-                arguments {
-                    arg("AROUTER_MODULE_NAME", project.getName())
-                    arg("AROUTER_GENERATE_DOC", "enable")
-                }
-            }
-        }
     }
     buildTypes {
         release {
@@ -35,6 +27,14 @@ android {
         targetCompatibility 1.8
     }
 
+}
+
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+        arg("AROUTER_GENERATE_DOC", "enable")
+        arg("room.schemaLocation": "$projectDir/schemas".toString(), "room.incremental": "true")
+    }
 }
 
 

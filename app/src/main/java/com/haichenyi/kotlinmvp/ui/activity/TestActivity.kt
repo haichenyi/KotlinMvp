@@ -1,6 +1,7 @@
 package com.haichenyi.kotlinmvp.ui.activity
 
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.haichenyi.kotlinmvp.R

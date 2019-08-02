@@ -18,3 +18,7 @@
 与Fragment生命周期同步即放在FragComponent中。比方说HttpReal(网络请求相关)，SpReal(sp操作相关),RouterReal(路由相关)等整
 个APP都要用到，就放在AppComponent中获取
 
+## 数据库：Room
+
+    数据库的操作增删改查操作，都不应该在主线程：kotlin里面个人觉得可以用：协程+Room+LiveData的方式执行
+
